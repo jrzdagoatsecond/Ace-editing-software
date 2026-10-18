@@ -1,0 +1,56 @@
+{
+  "name": "aces-editing-software",
+  "productName": "Aces Editing Software",
+  "version": "1.0.0",
+  "description": "Ace's Editing Software - a black and white video editor",
+  "main": "src/main.js",
+  "author": "Ace",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "test:export": "node test/export-test.js",
+    "dist": "electron-builder --win --publish never"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "ffprobe-static": "^3.1.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.ace.editingsoftware",
+    "productName": "Aces Editing Software",
+    "copyright": "Ace",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**",
+      "node_modules/ffprobe-static/**"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "shortcutName": "Ace's Editing Software",
+      "artifactName": "Aces-Editing-Software-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Aces-Editing-Software-Portable-${version}.${ext}"
+    }
+  }
+}
