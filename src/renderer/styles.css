@@ -217,3 +217,70 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- additions: multi-select, new inspector controls, export formats ---------- */
+.seg.wrap { flex-wrap: wrap; }
+.dialog { width: 540px; }
+.fmt-group { display: grid; grid-template-columns: 78px 1fr; align-items: center; gap: 8px; }
+#fmtDesc { min-height: 18px; }
+.fx-row.mixed .val { color: var(--g1); }
+.fx-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+.fx-pills button { height: 24px; padding: 0 10px; background: var(--k3); color: var(--g2); }
+.fx-pills button:hover { background: var(--k4); color: var(--w); }
+.fx-pills button.on { background: var(--w); color: var(--k0); font-weight: 600; }
+.fx-sub { color: var(--g2); margin-top: 2px; }
+.fx-note { color: var(--g1); font-size: 12px; line-height: 1.35; }
+.fx-num { display: grid; grid-template-columns: 74px minmax(0, 1fr); column-gap: 8px; align-items: center; }
+.fx-num label { color: var(--g2); }
+.fx-num input {
+  height: 26px; width: 100%; background: var(--k3); color: var(--w); border: 0; padding: 0 8px; font: inherit;
+  font-variant-numeric: tabular-nums; user-select: text; -webkit-user-select: text;
+}
+.fx-num input:focus { outline: 1px solid var(--w); outline-offset: 0; }
+.group-fx h3 { cursor: pointer; display: flex; justify-content: space-between; }
+.group-fx h3::after { content: "\2212"; color: var(--g1); font-weight: 400; }
+.group-fx.collapsed h3::after { content: "+"; }
+.group-fx.collapsed > :not(h3) { display: none; }
+.clip.multi::before { content: ""; position: absolute; inset: 0; border: 2px solid var(--w); z-index: 4; pointer-events: none; }
+.sel-count { color: var(--g2); }
+
+.clip .badges { right: 12px; overflow: hidden; }
+.clip .badges span { white-space: nowrap; }
+
+/* ---------- music lanes ---------- */
+#track { bottom: auto; height: 116px; }
+.clip { top: 8px; height: 100px; }
+#dropMark { height: 116px; bottom: auto; }
+#alanes { position: absolute; left: 0; right: 0; top: 148px; height: 98px; }
+.lane { position: relative; height: 49px; border-top: 1px solid var(--k3); background: #0a0a0a; }
+.lane-name { position: sticky; left: 8px; display: inline-block; padding: 2px 8px; margin: 3px 0 0 8px; color: var(--g1); font-size: 11px; z-index: 6; pointer-events: none; background: var(--k1); }
+.aclip {
+  --b: 8px; position: absolute; top: 4px; height: 41px; background: var(--k3); opacity: .72; cursor: grab; overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - var(--b)) 0, 100% var(--b), 100% 100%, var(--b) 100%, 0 calc(100% - var(--b)));
+}
+.aclip:hover { opacity: .9; }
+.aclip.sel { opacity: 1; background: var(--k4); }
+.aclip.dragging { opacity: .9; z-index: 7; cursor: grabbing; }
+.aclip canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.aclip .alabel { position: absolute; left: 10px; top: 3px; max-width: calc(100% - 22px); padding: 0 6px; background: #000; font-size: 11px; line-height: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; pointer-events: none; }
+.aclip .top { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--w); display: none; pointer-events: none; }
+.aclip.sel .top { display: block; }
+.aclip .handle::after { bottom: 0; }
+.aclip.sel .handle::after, .aclip .handle:hover::after { display: block; }
+.aclip.muted canvas { opacity: .25; }
+.lane.hot { background: var(--k2); }
+.media .th.audio { display: flex; align-items: center; justify-content: center; }
+
+/* ---------- fullscreen preview ---------- */
+#fsBar { display: none; position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 28px 22px; align-items: center; gap: 16px; z-index: 5;
+  background: linear-gradient(to top, rgba(0, 0, 0, .9), rgba(0, 0, 0, 0)); transition: opacity .25s; }
+#fsBar #fsSeek { flex: 1; }
+#fsTime { font-variant-numeric: tabular-nums; font-size: 14px; }
+#fsBar i { width: 20px; height: 20px; }
+#screenWrap:fullscreen { padding: 0; background: #000; }
+#screenWrap:fullscreen #screen { outline: 0; }
+#screenWrap:fullscreen #fsBar { display: flex; }
+#screenWrap:fullscreen.idle #fsBar { opacity: 0; pointer-events: none; }
+#screenWrap:fullscreen.idle { cursor: none; }
+
+.fx-num { grid-template-columns: 100px minmax(0, 1fr); }

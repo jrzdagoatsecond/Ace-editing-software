@@ -17,10 +17,10 @@
     </div>
     <div class="proj" id="projName">Untitled project</div>
     <div class="actions">
-      <button class="btn quiet" id="btnOpen" title="Open project (Ctrl+O)">Open</button>
-      <button class="btn quiet" id="btnSave" title="Save project (Ctrl+S)">Save</button>
+      <button class="btn quiet" id="btnOpen" title="Open a saved project (Ctrl+O)">Open project</button>
+      <button class="btn quiet" id="btnSave" title="Save your editable project (Ctrl+S)">Save project</button>
       <button class="btn" id="btnImport" title="Import clips (Ctrl+I)"><i data-icon="plus"></i>Import clips</button>
-      <button class="btn solid" id="btnExport" title="Export video (Ctrl+E)">Export</button>
+      <button class="btn solid" id="btnExport" title="Export video, audio or GIF (Ctrl+E)">Export</button>
     </div>
   </header>
 
@@ -45,6 +45,12 @@
           <button class="btn solid big" id="btnImport2">Import clips</button>
           <p class="muted">or drop files here</p>
         </div>
+        <div id="fsBar">
+          <button class="icon-btn" id="fsPlay" title="Play / pause (Space)"></button>
+          <input type="range" id="fsSeek" min="0" max="1000" step="1" value="0">
+          <span id="fsTime">00:00:00:00</span>
+          <button class="btn small" id="fsExit">Exit fullscreen</button>
+        </div>
       </div>
       <div id="transport">
         <div class="t-left">
@@ -60,6 +66,7 @@
         <div class="t-right">
           <span id="tcNow">00:00:00:00</span>
           <span class="muted" id="tcTotal">00:00:00:00</span>
+          <button class="icon-btn" id="bFull" title="Fullscreen preview (Ctrl+F)"><i data-icon="full"></i></button>
         </div>
       </div>
     </section>
@@ -70,10 +77,11 @@
         <span class="muted" id="inspMeta"></span>
       </div>
       <div id="inspEmpty" class="bin-empty">
-        <p>Select a clip on the timeline to edit it.</p>
-        <p class="muted">Fades, motion blur, speed, volume and colour all live here.</p>
+        <p>Select a clip on the timeline to edit it. Hold Ctrl and click to select several at once.</p>
+        <p class="muted">Fades, blur, speed, retiming, colour and style effects all live here.</p>
       </div>
       <div id="inspBody"></div>
+      <div id="inspAudio" hidden></div>
     </aside>
   </main>
 
@@ -88,6 +96,9 @@
         <button class="btn small" id="tDup" title="Duplicate clip (Ctrl+D)"><i data-icon="dup"></i>Duplicate</button>
         <button class="btn small" id="tDel" title="Delete clip (Delete)"><i data-icon="trash"></i>Delete</button>
       </div>
+      <div class="group">
+        <button class="btn small" id="tMusic" title="Add songs or sounds under the timeline"><i data-icon="music"></i>Add music</button>
+      </div>
       <div class="spacer"></div>
       <div class="group zoom">
         <span class="muted">Zoom</span>
@@ -99,6 +110,10 @@
       <div id="tlcontent">
         <div id="ruler"></div>
         <div id="track"></div>
+        <div id="alanes">
+          <div class="lane" data-lane="0"><span class="lane-name">Music 1</span></div>
+          <div class="lane" data-lane="1"><span class="lane-name">Music 2</span></div>
+        </div>
         <div id="dropMark"></div>
         <div id="playhead"><svg viewBox="0 0 24 28" width="20" height="23"><path d="M12 1C12 1 2.6 9.2 2.6 15.4c0 3.7 2.9 6.1 6.1 6.1 1.4 0 2.5-.5 3.3-1.3-.1 2.5-1.2 5-3.6 6.8h7.2c-2.4-1.8-3.5-4.3-3.6-6.8.8.8 1.9 1.3 3.3 1.3 3.2 0 6.1-2.4 6.1-6.1C21.4 9.2 12 1 12 1z"/></svg></div>
       </div>
@@ -108,11 +123,17 @@
 
 <div id="modal" hidden>
   <div class="dialog" id="exportDialog">
-    <h2>Export video</h2>
+    <h2>Export</h2>
     <div id="expSettings">
-      <div class="field"><label>Resolution</label><div class="seg" id="resSeg"></div></div>
-      <div class="field"><label>Frame rate</label><div class="seg" id="fpsSeg"></div></div>
-      <div class="field"><label>Quality</label><div class="seg" id="qualSeg"></div></div>
+      <div class="field">
+        <label>Format</label>
+        <div class="fmt-group"><span class="muted">Video</span><div class="seg wrap" id="fmtVideo"></div></div>
+        <div class="fmt-group"><span class="muted">Audio only</span><div class="seg wrap" id="fmtAudio"></div></div>
+        <p class="muted" id="fmtDesc"></p>
+      </div>
+      <div class="field" id="fResolution"><label>Resolution</label><div class="seg" id="resSeg"></div></div>
+      <div class="field" id="fFps"><label>Frame rate</label><div class="seg" id="fpsSeg"></div></div>
+      <div class="field" id="fQuality"><label id="qualLabel">Quality</label><div class="seg" id="qualSeg"></div></div>
       <p class="muted" id="expSummary"></p>
       <div class="row end">
         <button class="btn quiet" id="expCancel">Cancel</button>
